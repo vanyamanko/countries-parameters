@@ -7,6 +7,6 @@ import java.util.List;
 
 @Repository
 public interface PhoneCodeRepository extends JpaRepository<PhoneCode,Long> {
-    PhoneCode findByCountryOrId(String country, String Id);
+    PhoneCode findByCountryOrId(String country, String id);
     List<PhoneCode> findByCode(Integer code);
 }

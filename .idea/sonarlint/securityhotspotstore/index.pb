@@ -13,3 +13,5 @@
 0src/main/java/com/manko/phonecode/PhoneCode.java,1/d/1d86aae88e3eb20cea6c82f3392160dcd0eb176e
 k
 ;src/main/java/com/manko/phonecode/PhoneCodeApplication.java,5/b/5beaa1407db403dd397e7eb1d04e42a03b683d9c
+j
+:src/main/java/com/manko/phonecode/PhoneCodeRepository.java,8/b/8bc5a34bb520fd42c484c945f8265c8b6ed54fcb
