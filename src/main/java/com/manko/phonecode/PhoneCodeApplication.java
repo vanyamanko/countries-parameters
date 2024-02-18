@@ -13,5 +13,4 @@ public class PhoneCodeApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(PhoneCodeApplication.class, args);
 	}
-
 }

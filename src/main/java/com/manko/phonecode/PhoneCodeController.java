@@ -17,14 +17,14 @@ public class PhoneCodeController {
         this.phoneCodeService = phoneCodeService;
     }
     @GetMapping("/country")
-    public ResponseEntity<Integer> getCodeByCountryOrId(@RequestParam String country) {
-        int code = phoneCodeService.getCodeByCountryOrId(country);
+    public ResponseEntity<PhoneCode> getCodeByCountryOrId(@RequestParam String country) {
+        PhoneCode code = phoneCodeService.getCodeByCountryOrId(country);
         return ResponseEntity.ok(code);
     }
 
     @GetMapping("/code")
-    public ResponseEntity<List<String>> getCountryByCode(@RequestParam Integer code) {
-        List<String> countres = phoneCodeService.getCountriesByCode(code);
+    public ResponseEntity<List<PhoneCode>> getCountryByCode(@RequestParam Integer code) {
+        List<PhoneCode> countres = phoneCodeService.getCountriesByCode(code);
         return ResponseEntity.ok(countres);
     }
 }
