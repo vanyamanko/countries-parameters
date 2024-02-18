@@ -14,11 +14,13 @@ public class PhoneCodeServiceImpl implements PhoneCodeService {
         this.phoneCodeDAO = phoneCodeDAO;
     }
 
+    @Override
     public PhoneCode getCodeByCountryOrId(String countryOrId) {
         return phoneCodeDAO.findByCountryOrId(countryOrId, countryOrId)
                 .orElseThrow(IllegalArgumentException::new);
     }
 
+    @Override
     public List<PhoneCode> getCountriesByCode(Integer code) {
         return phoneCodeDAO.findByCode(code)
                 .orElseThrow(IllegalArgumentException::new);
