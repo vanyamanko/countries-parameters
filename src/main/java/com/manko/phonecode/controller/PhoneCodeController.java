@@ -1,5 +1,7 @@
-package com.manko.phonecode;
+package com.manko.phonecode.controller;
 
+import com.manko.phonecode.model.PhoneCode;
+import com.manko.phonecode.service.PhoneCodeService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +18,8 @@ public class PhoneCodeController {
     public PhoneCodeController(PhoneCodeService phoneCodeService) {
         this.phoneCodeService = phoneCodeService;
     }
-    @GetMapping("/country")
+
+    @GetMapping
     public ResponseEntity<PhoneCode> getCodeByCountryOrId(@RequestParam String country) {
         PhoneCode code = phoneCodeService.getCodeByCountryOrId(country);
         return ResponseEntity.ok(code);
@@ -24,7 +27,7 @@ public class PhoneCodeController {
 
     @GetMapping("/code")
     public ResponseEntity<List<PhoneCode>> getCountryByCode(@RequestParam Integer code) {
-        List<PhoneCode> countres = phoneCodeService.getCountriesByCode(code);
-        return ResponseEntity.ok(countres);
+        List<PhoneCode> countries = phoneCodeService.getCountriesByCode(code);
+        return ResponseEntity.ok(countries);
     }
 }

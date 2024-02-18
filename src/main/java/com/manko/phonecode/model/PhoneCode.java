@@ -1,4 +1,4 @@
-package com.manko.phonecode;
+package com.manko.phonecode.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
