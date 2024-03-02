@@ -5,6 +5,7 @@ Phone Number Lookup Service is a Java Maven server that accepts phone numbers or
 2. Spring Boot
 3. PostgreSQL
 4. Maven
+
 ### Example
 ```
 http://localhost:8080/api/v1/phone-code?country=canada
