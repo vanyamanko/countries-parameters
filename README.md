@@ -11,7 +11,7 @@ http://localhost:8080/api/v1/phone-code?country=canada
 ```
 ```json
 {
-"phone": "+1234567890",
+"id": "CA",
 "country": "Canada",
 "code": 1
 }

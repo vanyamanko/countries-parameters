@@ -8,8 +8,8 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @SpringBootApplication
 @EnableJpaAuditing
 @EnableWebMvc
-public class PhoneCodeApplication {
+public class CountriesPatametersApplication {
     public static void main(String[] args) {
-        SpringApplication.run(PhoneCodeApplication.class, args);
+        SpringApplication.run(CountriesPatametersApplication.class, args);
     }
 }

@@ -1,6 +1,6 @@
 package com.manko.phonecode.service;
 
-import com.manko.phonecode.dao.PhoneCodeDAO;
+import com.manko.phonecode.dao.PhoneCodeRepository;
 import com.manko.phonecode.model.PhoneCode;
 import org.springframework.stereotype.Service;
 
@@ -8,15 +8,15 @@ import java.util.List;
 
 @Service
 public class PhoneCodeServiceImpl implements PhoneCodeService {
-    private final PhoneCodeDAO phoneCodeDAO;
+    private final PhoneCodeRepository phoneCodeDAO;
 
-    public PhoneCodeServiceImpl(PhoneCodeDAO phoneCodeDAO) {
+    public PhoneCodeServiceImpl(PhoneCodeRepository phoneCodeDAO) {
         this.phoneCodeDAO = phoneCodeDAO;
     }
 
     @Override
     public PhoneCode getCodeByCountryOrId(String countryOrId) {
-        return phoneCodeDAO.findByCountryOrId(countryOrId, countryOrId)
+        return phoneCodeDAO.findByCountryIgnoreCaseOrIdIgnoreCase(countryOrId, countryOrId)
                 .orElseThrow(IllegalArgumentException::new);
     }
 

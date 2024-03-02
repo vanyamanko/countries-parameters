@@ -2,5 +2,5 @@
 /.idea/
 mvnw.cmd
 mvnw
-phone-code.iml
+*.iml
 .DS_Store
