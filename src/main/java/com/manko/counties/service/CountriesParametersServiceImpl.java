@@ -3,13 +3,13 @@ package com.manko.counties.service;
 import com.manko.counties.dao.CountryParametersRepository;
 import com.manko.counties.model.CountryParameters;
 import com.manko.counties.model.CountryParametersDto;
+import com.manko.counties.service.utility.CountryParametersUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
-import static com.manko.counties.service.CountryParametersUtils.buildCountryParametersDtoFromModel;
+import static com.manko.counties.service.utility.CountryParametersUtils.buildCountryParametersDtoFromModel;
 
 @Service
 @AllArgsConstructor
@@ -29,6 +29,6 @@ public class CountriesParametersServiceImpl implements CountriesParametersServic
                 .orElseThrow(IllegalArgumentException::new);
         return countryParametersList.stream()
                 .map(CountryParametersUtils::buildCountryParametersDtoFromModel)
-                .collect(Collectors.toList());
+                .toList();
     }
 }
