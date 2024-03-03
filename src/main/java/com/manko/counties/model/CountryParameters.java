@@ -18,7 +18,7 @@ public class CountryParameters {
 
     private Integer code;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "region_id")
     private Region region;
 

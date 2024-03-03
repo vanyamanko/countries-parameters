@@ -6,7 +6,6 @@ import com.manko.counties.model.CountryParameters;
 import com.manko.counties.model.TimeZone;
 import com.manko.counties.model.dto.TimeZoneDto;
 import com.manko.counties.service.utility.TimeZoneUtils;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -54,7 +53,7 @@ public class TimeZoneService implements CrudService<TimeZoneDto.Response, TimeZo
     @Override
     public void delete(Integer id) {
         TimeZone timeZone = timeZoneRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("TimeZone not found with id: " + id));
+                .orElseThrow(IllegalArgumentException::new);
 
         for (CountryParameters countryParameters : timeZone.getCountryParametersSet()) {
             countryParameters.getTimeZones().remove(timeZone);
