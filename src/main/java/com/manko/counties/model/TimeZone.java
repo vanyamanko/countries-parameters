@@ -22,15 +22,6 @@ public class TimeZone {
     @Column(name = "name")
     private String name;
 
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "timeZones", cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "timeZones", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<CountryParameters> countryParametersSet;
-
-    public TimeZone(String name, List<CountryParameters> countryParametersSet) {
-        this.name = name;
-        this.countryParametersSet = countryParametersSet;
-    }
-
-    public TimeZone(String name) {
-        this.name = name;
-    }
 }
