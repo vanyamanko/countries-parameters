@@ -10,9 +10,11 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static com.manko.counties.service.utility.TimeZoneUtils.buildTimeZoneResponseFromModel;
 
@@ -38,8 +40,31 @@ public class TimeZoneService implements CrudService<TimeZoneDto.Response, TimeZo
 
     @Override
     public TimeZoneDto.Response create(TimeZoneDto.RequestBody createForm) {
-        List<CountryParameters> countryParameters = countryParametersRepository.findByCountries(createForm.getCountries());
-        TimeZone timeZone = new TimeZone(createForm.getName());
+        TimeZone timeZone = saveTimeZone(createForm);
+        return buildTimeZoneResponseFromModel(timeZone);
+    }
+
+    @Override
+    public TimeZoneDto.Response update(Integer id, TimeZoneDto.RequestBody updateForm) {
+        TimeZone timeZoneModel = timeZoneRepository.findById(id)
+                .map(timeZone -> saveTimeZone(timeZone, updateForm))
+                .orElseThrow(IllegalArgumentException::new);
+        return buildTimeZoneResponseFromModel(timeZoneModel);
+    }
+
+    @Override
+    public void delete(Integer id) {
+        timeZoneRepository.deleteById(id);
+    }
+
+    private TimeZone saveTimeZone(TimeZoneDto.RequestBody requestBody) {
+        TimeZone timeZone = new TimeZone();
+        return saveTimeZone(timeZone, requestBody);
+    }
+
+    private TimeZone saveTimeZone(TimeZone timeZone, TimeZoneDto.RequestBody requestBody) {
+        List<CountryParameters> countryParameters = countryParametersRepository.findByCountries(requestBody.getCountries());
+        timeZone.setName(requestBody.getName());
         timeZoneRepository.save(timeZone);
 
         countryParameters.forEach(country -> {
@@ -53,36 +78,6 @@ public class TimeZoneService implements CrudService<TimeZoneDto.Response, TimeZo
         });
 
         timeZone.setCountryParametersSet(countryParameters);
-        return buildTimeZoneResponseFromModel(timeZone);
-    }
-
-    @Override
-    public TimeZoneDto.Response update(Integer id, TimeZoneDto.RequestBody updateForm) {
-        TimeZone timeZoneModel = timeZoneRepository.findById(id)
-                .map(timeZone -> {
-                    List<CountryParameters> countryParameters = countryParametersRepository.findByCountries(updateForm.getCountries());
-                    timeZone.setName(updateForm.getName());
-                    timeZoneRepository.save(timeZone);
-
-                    countryParameters.forEach(country -> {
-                        Set<TimeZone> timeZoneSet = country.getTimeZones();
-                        if (timeZoneSet == null) {
-                            timeZoneSet = new HashSet<>();
-                        }
-                        timeZoneSet.add(timeZone);
-                        country.setTimeZones(timeZoneSet);
-                        countryParametersRepository.save(country);
-                    });
-
-                    timeZone.setCountryParametersSet(countryParameters);
-                    return timeZone;
-                })
-                .orElseThrow(IllegalArgumentException::new);
-        return buildTimeZoneResponseFromModel(timeZoneModel);
-    }
-
-    @Override
-    public void delete(Integer id) {
-        timeZoneRepository.deleteById(id);
+        return timeZone;
     }
 }
