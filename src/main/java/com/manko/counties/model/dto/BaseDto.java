@@ -1,12 +1,15 @@
 package com.manko.counties.model.dto;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.experimental.UtilityClass;
 
 import java.util.List;
 
 @UtilityClass
-public class RegionDto {
+public class BaseDto {
     @Data
     @Builder
     @NoArgsConstructor

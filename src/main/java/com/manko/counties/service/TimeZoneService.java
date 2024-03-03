@@ -4,7 +4,7 @@ import com.manko.counties.dao.CountryParametersRepository;
 import com.manko.counties.dao.TimeZoneRepository;
 import com.manko.counties.model.CountryParameters;
 import com.manko.counties.model.TimeZone;
-import com.manko.counties.model.dto.TimeZoneDto;
+import com.manko.counties.model.dto.BaseDto;
 import com.manko.counties.service.utility.TimeZoneUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,31 +17,31 @@ import static com.manko.counties.service.utility.TimeZoneUtils.buildTimeZoneResp
 
 @AllArgsConstructor
 @Service
-public class TimeZoneService implements CrudService<TimeZoneDto.Response, TimeZoneDto.RequestBody> {
+public class TimeZoneService implements CrudService<BaseDto.Response, BaseDto.RequestBody> {
     private final TimeZoneRepository timeZoneRepository;
     private final CountryParametersRepository countryParametersRepository;
 
     @Override
-    public List<TimeZoneDto.Response> getAll() {
+    public List<BaseDto.Response> getAll() {
         return timeZoneRepository.findAll().stream()
                 .map(TimeZoneUtils::buildTimeZoneResponseFromModel)
                 .toList();
     }
 
     @Override
-    public TimeZoneDto.Response get(Integer id) {
+    public BaseDto.Response get(Integer id) {
         return buildTimeZoneResponseFromModel(timeZoneRepository.findById(id)
                 .orElseThrow(IllegalArgumentException::new));
     }
 
     @Override
-    public TimeZoneDto.Response create(TimeZoneDto.RequestBody createForm) {
+    public BaseDto.Response create(BaseDto.RequestBody createForm) {
         TimeZone timeZone = saveTimeZone(createForm);
         return buildTimeZoneResponseFromModel(timeZone);
     }
 
     @Override
-    public TimeZoneDto.Response update(Integer id, TimeZoneDto.RequestBody updateForm) {
+    public BaseDto.Response update(Integer id, BaseDto.RequestBody updateForm) {
         TimeZone timeZoneModel = timeZoneRepository.findById(id)
                 .map(timeZone -> saveTimeZone(timeZone, updateForm))
                 .orElseThrow(IllegalArgumentException::new);
@@ -60,12 +60,12 @@ public class TimeZoneService implements CrudService<TimeZoneDto.Response, TimeZo
         timeZoneRepository.deleteById(id);
     }
 
-    private TimeZone saveTimeZone(TimeZoneDto.RequestBody requestBody) {
+    private TimeZone saveTimeZone(BaseDto.RequestBody requestBody) {
         TimeZone timeZone = new TimeZone();
         return saveTimeZone(timeZone, requestBody);
     }
 
-    private TimeZone saveTimeZone(TimeZone timeZone, TimeZoneDto.RequestBody requestBody) {
+    private TimeZone saveTimeZone(TimeZone timeZone, BaseDto.RequestBody requestBody) {
         List<CountryParameters> countryParameters = countryParametersRepository.findByCountries(requestBody.getCountries());
         timeZone.setName(requestBody.getName());
         timeZoneRepository.save(timeZone);
