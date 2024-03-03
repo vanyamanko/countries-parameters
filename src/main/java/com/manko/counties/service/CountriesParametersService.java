@@ -4,8 +4,8 @@ import com.manko.counties.model.dto.CountryParametersDto;
 
 import java.util.List;
 
-public interface CountriesParametersService {
-    CountryParametersDto getCodeByCountryOrId(String countryOrId);
+public interface CountriesParametersService extends CrudService<CountryParametersDto.Response, CountryParametersDto.RequestBody> {
+    CountryParametersDto.Response getCodeByCountryOrId(String countryOrId);
 
-    List<CountryParametersDto> getCountriesByCode(Integer code);
+    List<CountryParametersDto.Response> getCountriesByCode(Integer code);
 }

@@ -7,7 +7,6 @@ import com.manko.counties.model.TimeZone;
 import com.manko.counties.model.dto.TimeZoneDto;
 import com.manko.counties.service.utility.TimeZoneUtils;
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -17,7 +16,6 @@ import java.util.Set;
 import static com.manko.counties.service.utility.TimeZoneUtils.buildTimeZoneResponseFromModel;
 
 @AllArgsConstructor
-@Slf4j
 @Service
 public class TimeZoneService implements CrudService<TimeZoneDto.Response, TimeZoneDto.RequestBody> {
     private final TimeZoneRepository timeZoneRepository;

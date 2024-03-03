@@ -2,16 +2,31 @@ package com.manko.counties.model.dto;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.experimental.UtilityClass;
 
 import java.util.Set;
 
-@Data
-@Builder
+@UtilityClass
 public class CountryParametersDto {
-    private String id;
-    private String country;
-    private Integer code;
+    @Data
+    @Builder
+    public class Response {
+        private Integer id;
+        private String countryShortName;
+        private String country;
+        private Integer code;
 
-    private String region;
-    private Set<String> timeZones;
+        private String region;
+        private Set<String> timeZones;
+    }
+
+    @Data
+    @Builder
+    public class RequestBody {
+        private String countryShortName;
+        private String country;
+        private Integer code;
+
+        private String region;
+    }
 }

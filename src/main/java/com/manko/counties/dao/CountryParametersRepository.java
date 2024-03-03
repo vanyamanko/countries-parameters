@@ -10,8 +10,8 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface CountryParametersRepository extends JpaRepository<CountryParameters, Long> {
-    Optional<CountryParameters> findByCountryIgnoreCaseOrIdIgnoreCase(String country, String id);
+public interface CountryParametersRepository extends JpaRepository<CountryParameters, Integer> {
+    Optional<CountryParameters> findByCountryIgnoreCaseOrCountryShortNameIgnoreCase(String country, String countryShortName);
 
     @Query(value = "select * from countries_parameters o where o.country in (?1)", nativeQuery = true)
     List<CountryParameters> findByCountries(@Param("1") List<String> countries);
