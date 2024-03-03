@@ -1,4 +1,4 @@
-package com.manko.counties.model;
+package com.manko.counties.model.dto;
 
 import lombok.Builder;
 import lombok.Data;

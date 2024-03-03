@@ -1,23 +1,37 @@
 package com.manko.counties.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import java.util.List;
 import java.util.Set;
 
 @Entity
 @Table
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class TimeZone {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonIgnore
     private Integer id;
 
-    @Column(name = "name_time_zone")
-    private String nameTimeZone;
+    @Column(name = "name")
+    private String name;
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "timeZones", cascade = CascadeType.ALL)
-    private Set<CountryParameters> countryParametersSet;
+    private List<CountryParameters> countryParametersSet;
+
+    public TimeZone(String name, List<CountryParameters> countryParametersSet) {
+        this.name = name;
+        this.countryParametersSet = countryParametersSet;
+    }
+
+    public TimeZone(String name) {
+        this.name = name;
+    }
 }

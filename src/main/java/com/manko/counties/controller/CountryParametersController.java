@@ -1,8 +1,7 @@
 package com.manko.counties.controller;
 
-import com.manko.counties.model.CountryParametersDto;
+import com.manko.counties.model.dto.CountryParametersDto;
 import com.manko.counties.service.CountriesParametersService;
-import com.manko.counties.model.CountryParameters;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/phone-code")
+@RequestMapping("/api/v1/countries-parameters")
 public class CountryParametersController {
     private final CountriesParametersService countriesParametersService;
 

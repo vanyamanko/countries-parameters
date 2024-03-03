@@ -3,6 +3,7 @@ package com.manko.counties.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Data
@@ -25,6 +26,6 @@ public class CountryParameters {
     @JoinTable(name = "country_time_zone",
             joinColumns = @JoinColumn(name = "country_id"),
             inverseJoinColumns = @JoinColumn(name = "time_zone_id"))
-    private Set<TimeZone> timeZones;
+    private Set<TimeZone> timeZones = new HashSet<>();
 
 }

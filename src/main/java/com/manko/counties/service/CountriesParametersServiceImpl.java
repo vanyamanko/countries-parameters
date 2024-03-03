@@ -2,7 +2,7 @@ package com.manko.counties.service;
 
 import com.manko.counties.dao.CountryParametersRepository;
 import com.manko.counties.model.CountryParameters;
-import com.manko.counties.model.CountryParametersDto;
+import com.manko.counties.model.dto.CountryParametersDto;
 import com.manko.counties.service.utility.CountryParametersUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
