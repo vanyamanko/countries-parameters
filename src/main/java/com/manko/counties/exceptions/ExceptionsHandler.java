@@ -1,4 +1,4 @@
-package com.manko.phonecode.exceptions;
+package com.manko.counties.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
