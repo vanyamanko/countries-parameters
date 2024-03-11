@@ -1,18 +1,18 @@
-package com.manko.counties.service;
+package com.manko.countries.service;
 
-import com.manko.counties.dao.CountryParametersRepository;
-import com.manko.counties.dao.RegionRepository;
-import com.manko.counties.model.CountryParameters;
-import com.manko.counties.model.Region;
-import com.manko.counties.model.dto.BaseDto;
-import com.manko.counties.service.utility.RegionUtils;
+import com.manko.countries.dao.CountryRepository;
+import com.manko.countries.dao.RegionRepository;
+import com.manko.countries.model.Country;
+import com.manko.countries.model.Region;
+import com.manko.countries.model.dto.BaseDto;
+import com.manko.countries.service.utility.RegionUtils;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static com.manko.counties.service.utility.RegionUtils.buildRegionResponseFromModel;
+import static com.manko.countries.service.utility.RegionUtils.buildRegionResponseFromModel;
 
 @AllArgsConstructor
 @Slf4j
@@ -20,7 +20,7 @@ import static com.manko.counties.service.utility.RegionUtils.buildRegionResponse
 public class RegionService implements CrudService<BaseDto.Response, BaseDto.RequestBody> {
 
     private final RegionRepository regionRepository;
-    private final CountryParametersRepository countryParametersRepository;
+    private final CountryRepository countryRepository;
 
     @Override
     public List<BaseDto.Response> getAll() {
@@ -55,23 +55,23 @@ public class RegionService implements CrudService<BaseDto.Response, BaseDto.Requ
         Region region = regionRepository.findById(id)
                 .orElseThrow(IllegalArgumentException::new);
 
-        for (CountryParameters countryParameters : region.getCountryParameters()) {
-            countryParameters.setRegion(null);
-            countryParametersRepository.save(countryParameters);
+        for (Country country : region.getCountryParameters()) {
+            country.setRegion(null);
+            countryRepository.save(country);
         }
 
         regionRepository.deleteById(id);
     }
 
     private Region saveRegion(Region region, BaseDto.RequestBody requestBody) {
-        List<CountryParameters> countryParameters = countryParametersRepository.findByCountries(requestBody.getCountries());
+        List<Country> countryParameters = countryRepository.findByNames(requestBody.getCountries());
 
         region.setRegionName(requestBody.getName());
         regionRepository.save(region);
 
-        for (CountryParameters country : countryParameters) {
+        for (Country country : countryParameters) {
             country.setRegion(region);
-            countryParametersRepository.save(country);
+            countryRepository.save(country);
         }
 
         region.setCountryParameters(countryParameters);

@@ -1,4 +1,4 @@
-package com.manko.counties.model;
+package com.manko.countries.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -19,9 +19,8 @@ public class TimeZone {
     @JsonIgnore
     private Integer id;
 
-    @Column(name = "name")
     private String name;
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "timeZones", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private List<CountryParameters> countryParametersSet;
+    private List<Country> countrySet;
 }

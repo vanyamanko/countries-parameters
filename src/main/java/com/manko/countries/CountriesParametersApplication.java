@@ -1,4 +1,4 @@
-package com.manko.counties;
+package com.manko.countries;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -8,8 +8,8 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @SpringBootApplication
 @EnableJpaAuditing
 @EnableWebMvc
-public class CountriesPatametersApplication {
+public class CountriesParametersApplication {
     public static void main(String[] args) {
-        SpringApplication.run(CountriesPatametersApplication.class, args);
+        SpringApplication.run(CountriesParametersApplication.class, args);
     }
 }

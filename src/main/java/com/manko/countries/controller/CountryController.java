@@ -1,7 +1,7 @@
-package com.manko.counties.controller;
+package com.manko.countries.controller;
 
-import com.manko.counties.model.dto.CountryParametersDto;
-import com.manko.counties.service.CountriesParametersService;
+import com.manko.countries.model.dto.CountryDto;
+import com.manko.countries.service.CountryService;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,44 +19,44 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/countries-parameters")
-public class CountryParametersController {
-    private final CountriesParametersService countriesParametersService;
+public class CountryController {
+    private final CountryService countriesParametersService;
 
-    public CountryParametersController(CountriesParametersService countriesParametersService) {
+    public CountryController(CountryService countriesParametersService) {
         this.countriesParametersService = countriesParametersService;
     }
 
     @GetMapping("/country-or-id")
-    public ResponseEntity<CountryParametersDto.Response> getCodeByCountryOrId(@RequestParam String country) {
-        CountryParametersDto.Response code = countriesParametersService.getCodeByCountryOrId(country);
+    public ResponseEntity<CountryDto.Response> getCodeByCountryOrId(@RequestParam String country) {
+        CountryDto.Response code = countriesParametersService.getCodeByCountryOrId(country);
         return ResponseEntity.ok(code);
     }
 
     @GetMapping("/code")
-    public ResponseEntity<List<CountryParametersDto.Response>> getCountryByCode(@RequestParam Integer code) {
-        List<CountryParametersDto.Response> countries = countriesParametersService.getCountriesByCode(code);
+    public ResponseEntity<List<CountryDto.Response>> getCountryByCode(@RequestParam Integer code) {
+        List<CountryDto.Response> countries = countriesParametersService.getCountriesByCode(code);
         return ResponseEntity.ok(countries);
     }
 
     @GetMapping
-    public ResponseEntity<List<CountryParametersDto.Response>> getAllCountryParameters() {
-        List<CountryParametersDto.Response> countries = countriesParametersService.getAll();
+    public ResponseEntity<List<CountryDto.Response>> getAllCountryParameters() {
+        List<CountryDto.Response> countries = countriesParametersService.getAll();
         return new ResponseEntity<>(countries, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CountryParametersDto.Response> getCountryParametersById(@PathVariable Integer id) {
-        CountryParametersDto.Response country = countriesParametersService.get(id);
+    public ResponseEntity<CountryDto.Response> getCountryParametersById(@PathVariable Integer id) {
+        CountryDto.Response country = countriesParametersService.get(id);
         return new ResponseEntity<>(country, HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<CountryParametersDto.Response> createCountryParameters(@RequestBody CountryParametersDto.RequestBody countryParameters) {
+    public ResponseEntity<CountryDto.Response> createCountryParameters(@RequestBody CountryDto.RequestBody countryParameters) {
         return new ResponseEntity<>(countriesParametersService.create(countryParameters), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CountryParametersDto.Response> updateCountryParameters(@PathVariable Integer id, @RequestBody CountryParametersDto.RequestBody countryParameters) {
+    public ResponseEntity<CountryDto.Response> updateCountryParameters(@PathVariable Integer id, @RequestBody CountryDto.RequestBody countryParameters) {
         return new ResponseEntity<>(countriesParametersService.update(id, countryParameters), HttpStatus.CREATED);
     }
 

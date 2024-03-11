@@ -1,4 +1,4 @@
-package com.manko.counties.service;
+package com.manko.countries.service;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.manko.counties.model;
+package com.manko.countries.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -13,16 +13,15 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "countries_parameters")
-public class CountryParameters {
+public class Country {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String countryShortName;
+    private String shortName;
 
-    private String country;
+    private String name;
 
     private Integer code;
 

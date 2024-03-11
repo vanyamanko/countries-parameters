@@ -1,11 +1,11 @@
-package com.manko.counties.service;
+package com.manko.countries.service;
 
-import com.manko.counties.dao.CountryParametersRepository;
-import com.manko.counties.dao.TimeZoneRepository;
-import com.manko.counties.model.CountryParameters;
-import com.manko.counties.model.TimeZone;
-import com.manko.counties.model.dto.BaseDto;
-import com.manko.counties.service.utility.TimeZoneUtils;
+import com.manko.countries.dao.CountryRepository;
+import com.manko.countries.dao.TimeZoneRepository;
+import com.manko.countries.model.Country;
+import com.manko.countries.model.TimeZone;
+import com.manko.countries.model.dto.BaseDto;
+import com.manko.countries.service.utility.TimeZoneUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,13 +13,13 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static com.manko.counties.service.utility.TimeZoneUtils.buildTimeZoneResponseFromModel;
+import static com.manko.countries.service.utility.TimeZoneUtils.buildTimeZoneResponseFromModel;
 
 @AllArgsConstructor
 @Service
 public class TimeZoneService implements CrudService<BaseDto.Response, BaseDto.RequestBody> {
     private final TimeZoneRepository timeZoneRepository;
-    private final CountryParametersRepository countryParametersRepository;
+    private final CountryRepository countryRepository;
 
     @Override
     public List<BaseDto.Response> getAll() {
@@ -53,8 +53,8 @@ public class TimeZoneService implements CrudService<BaseDto.Response, BaseDto.Re
         TimeZone timeZone = timeZoneRepository.findById(id)
                 .orElseThrow(IllegalArgumentException::new);
 
-        for (CountryParameters countryParameters : timeZone.getCountryParametersSet()) {
-            countryParameters.getTimeZones().remove(timeZone);
+        for (Country country : timeZone.getCountrySet()) {
+            country.getTimeZones().remove(timeZone);
         }
 
         timeZoneRepository.deleteById(id);
@@ -66,7 +66,7 @@ public class TimeZoneService implements CrudService<BaseDto.Response, BaseDto.Re
     }
 
     private TimeZone saveTimeZone(TimeZone timeZone, BaseDto.RequestBody requestBody) {
-        List<CountryParameters> countryParameters = countryParametersRepository.findByCountries(requestBody.getCountries());
+        List<Country> countryParameters = countryRepository.findByNames(requestBody.getCountries());
         timeZone.setName(requestBody.getName());
         timeZoneRepository.save(timeZone);
 
@@ -77,10 +77,10 @@ public class TimeZoneService implements CrudService<BaseDto.Response, BaseDto.Re
             }
             timeZoneSet.add(timeZone);
             country.setTimeZones(timeZoneSet);
-            countryParametersRepository.save(country);
+            countryRepository.save(country);
         });
 
-        timeZone.setCountryParametersSet(countryParameters);
+        timeZone.setCountrySet(countryParameters);
         return timeZone;
     }
 }

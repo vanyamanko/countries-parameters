@@ -1,8 +1,8 @@
-package com.manko.counties.service.utility;
+package com.manko.countries.service.utility;
 
-import com.manko.counties.model.CountryParameters;
-import com.manko.counties.model.Region;
-import com.manko.counties.model.dto.BaseDto;
+import com.manko.countries.model.Country;
+import com.manko.countries.model.Region;
+import com.manko.countries.model.dto.BaseDto;
 import lombok.experimental.UtilityClass;
 
 import java.util.List;
@@ -13,7 +13,7 @@ public class RegionUtils {
         List<String> countries = null;
         if (region.getCountryParameters() != null) {
             countries = region.getCountryParameters().stream()
-                    .map(CountryParameters::getCountry)
+                    .map(Country::getName)
                     .toList();
         }
         return BaseDto.Response.builder()

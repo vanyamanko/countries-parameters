@@ -1,6 +1,6 @@
-package com.manko.counties.dao;
+package com.manko.countries.dao;
 
-import com.manko.counties.model.TimeZone;
+import com.manko.countries.model.TimeZone;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

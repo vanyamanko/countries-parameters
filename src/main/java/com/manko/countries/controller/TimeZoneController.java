@@ -1,7 +1,7 @@
-package com.manko.counties.controller;
+package com.manko.countries.controller;
 
-import com.manko.counties.model.dto.BaseDto;
-import com.manko.counties.service.CrudService;
+import com.manko.countries.model.dto.BaseDto;
+import com.manko.countries.service.CrudService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

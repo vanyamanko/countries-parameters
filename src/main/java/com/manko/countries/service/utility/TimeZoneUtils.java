@@ -1,8 +1,8 @@
-package com.manko.counties.service.utility;
+package com.manko.countries.service.utility;
 
-import com.manko.counties.model.CountryParameters;
-import com.manko.counties.model.TimeZone;
-import com.manko.counties.model.dto.BaseDto;
+import com.manko.countries.model.Country;
+import com.manko.countries.model.TimeZone;
+import com.manko.countries.model.dto.BaseDto;
 import lombok.experimental.UtilityClass;
 
 import java.util.List;
@@ -11,9 +11,9 @@ import java.util.List;
 public class TimeZoneUtils {
     public static BaseDto.Response buildTimeZoneResponseFromModel(TimeZone timeZone) {
         List<String> countries = null;
-        if (timeZone.getCountryParametersSet() != null) {
-            countries = timeZone.getCountryParametersSet().stream()
-                    .map(CountryParameters::getCountry)
+        if (timeZone.getCountrySet() != null) {
+            countries = timeZone.getCountrySet().stream()
+                    .map(Country::getName)
                     .toList();
         }
         return BaseDto.Response.builder()

@@ -1,4 +1,4 @@
-package com.manko.counties.model.dto;
+package com.manko.countries.model.dto;
 
 import lombok.Builder;
 import lombok.Data;
@@ -7,7 +7,7 @@ import lombok.experimental.UtilityClass;
 import java.util.Set;
 
 @UtilityClass
-public class CountryParametersDto {
+public class CountryDto {
     @Data
     @Builder
     public class Response {
@@ -26,7 +26,6 @@ public class CountryParametersDto {
         private String countryShortName;
         private String country;
         private Integer code;
-
         private String region;
     }
 }

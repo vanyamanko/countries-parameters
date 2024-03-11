@@ -1,4 +1,4 @@
-package com.manko.counties.exceptions;
+package com.manko.countries.exceptions;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

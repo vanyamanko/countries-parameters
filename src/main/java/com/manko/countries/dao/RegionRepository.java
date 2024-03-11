@@ -1,6 +1,6 @@
-package com.manko.counties.dao;
+package com.manko.countries.dao;
 
-import com.manko.counties.model.Region;
+import com.manko.countries.model.Region;
 
 import java.util.Optional;
 

@@ -1,4 +1,4 @@
-package com.manko.counties.model;
+package com.manko.countries.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -17,5 +17,5 @@ public class Region {
     private String regionName;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "region", cascade = CascadeType.PERSIST)
-    private List<CountryParameters> countryParameters;
+    private List<Country> countryParameters;
 }
