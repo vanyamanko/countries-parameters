@@ -1,5 +1,6 @@
 package com.manko.countries.service;
 
+import com.manko.countries.component.Cache;
 import com.manko.countries.dao.CountryRepository;
 import com.manko.countries.dao.TimeZoneRepository;
 import com.manko.countries.model.Country;
@@ -7,6 +8,7 @@ import com.manko.countries.model.TimeZone;
 import com.manko.countries.model.dto.BaseDto;
 import com.manko.countries.service.utility.TimeZoneUtils;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -17,10 +19,11 @@ import static com.manko.countries.service.utility.TimeZoneUtils.buildTimeZoneRes
 
 @AllArgsConstructor
 @Service
+@Slf4j
 public class TimeZoneService implements CrudService<BaseDto.Response, BaseDto.RequestBody> {
     private final TimeZoneRepository timeZoneRepository;
     private final CountryRepository countryRepository;
-
+    private final Cache cache;
     @Override
     public List<BaseDto.Response> getAll() {
         return timeZoneRepository.findAll().stream()
@@ -30,8 +33,17 @@ public class TimeZoneService implements CrudService<BaseDto.Response, BaseDto.Re
 
     @Override
     public BaseDto.Response get(Integer id) {
-        return buildTimeZoneResponseFromModel(timeZoneRepository.findById(id)
+        String key = "id" + id;
+        BaseDto.Response cachedData = (BaseDto.Response) cache.get(key);
+        if (cachedData != null) {
+            log.info("Cached data found for key: {}", key);
+            return cachedData;
+        }
+        BaseDto.Response data = buildTimeZoneResponseFromModel(timeZoneRepository.findById(id)
                 .orElseThrow(IllegalArgumentException::new));
+
+        cache.put(key, data);
+        return data;
     }
 
     @Override
@@ -42,14 +54,20 @@ public class TimeZoneService implements CrudService<BaseDto.Response, BaseDto.Re
 
     @Override
     public BaseDto.Response update(Integer id, BaseDto.RequestBody updateForm) {
+        String key = "id" + id;
+        cache.remove(key);
         TimeZone timeZoneModel = timeZoneRepository.findById(id)
                 .map(timeZone -> saveTimeZone(timeZone, updateForm))
                 .orElseThrow(IllegalArgumentException::new);
-        return buildTimeZoneResponseFromModel(timeZoneModel);
+        BaseDto.Response data = buildTimeZoneResponseFromModel(timeZoneModel);
+        cache.put(key, data);
+        return data;
     }
 
     @Override
     public void delete(Integer id) {
+        String key = "id" + id;
+        cache.remove(key);
         TimeZone timeZone = timeZoneRepository.findById(id)
                 .orElseThrow(IllegalArgumentException::new);
 

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class ExceptionsHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(IllegalArgumentException.class)
-    public ErrorResponse handleIllegalArgumentException() {
-        return new ErrorResponse("Not found, try again!");
+    public ErrorResponse handleIllegalArgumentException(IllegalArgumentException ex) {
+        return new ErrorResponse(ex.getMessage());
     }
 }

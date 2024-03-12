@@ -1,5 +1,6 @@
 package com.manko.countries.service;
 
+import com.manko.countries.component.Cache;
 import com.manko.countries.dao.CountryRepository;
 import com.manko.countries.dao.RegionRepository;
 import com.manko.countries.model.Country;
@@ -21,6 +22,7 @@ public class RegionService implements CrudService<BaseDto.Response, BaseDto.Requ
 
     private final RegionRepository regionRepository;
     private final CountryRepository countryRepository;
+    private final Cache cache;
 
     @Override
     public List<BaseDto.Response> getAll() {
@@ -31,27 +33,45 @@ public class RegionService implements CrudService<BaseDto.Response, BaseDto.Requ
 
     @Override
     public BaseDto.Response get(Integer id) {
+        String key = "id" + id;
+        BaseDto.Response cachedData = (BaseDto.Response) cache.get(key);
+        if (cachedData != null) {
+            log.info("Cached data found for key: {}", key);
+            return cachedData;
+        }
         Region region = regionRepository.findById(id)
                 .orElseThrow(IllegalArgumentException::new);
-        return buildRegionResponseFromModel(region);
+        BaseDto.Response data = buildRegionResponseFromModel(region);
+        cache.put(key, data);
+        return data;
     }
 
     @Override
     public BaseDto.Response create(BaseDto.RequestBody createForm) {
+        if (regionRepository.findByName(createForm.getName())
+                .isPresent()) {
+            throw new IllegalArgumentException("Duplicate region");
+        }
         Region region = saveRegion(new Region(), createForm);
         return buildRegionResponseFromModel(region);
     }
 
     @Override
     public BaseDto.Response update(Integer id, BaseDto.RequestBody updateForm) {
+        String key = "id" + id;
+        cache.remove(key);
         Region region = regionRepository.findById(id)
                 .orElseThrow(IllegalArgumentException::new);
         Region newRegion = saveRegion(region, updateForm);
-        return buildRegionResponseFromModel(newRegion);
+        BaseDto.Response data = buildRegionResponseFromModel(newRegion);
+        cache.put(key, data);
+        return data;
     }
 
     @Override
     public void delete(Integer id) {
+        String key = "id" + id;
+        cache.remove(key);
         Region region = regionRepository.findById(id)
                 .orElseThrow(IllegalArgumentException::new);
 
@@ -66,7 +86,7 @@ public class RegionService implements CrudService<BaseDto.Response, BaseDto.Requ
     private Region saveRegion(Region region, BaseDto.RequestBody requestBody) {
         List<Country> countryParameters = countryRepository.findByNames(requestBody.getCountries());
 
-        region.setRegionName(requestBody.getName());
+        region.setName(requestBody.getName());
         regionRepository.save(region);
 
         for (Country country : countryParameters) {

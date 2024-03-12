@@ -18,7 +18,7 @@ public class RegionUtils {
         }
         return BaseDto.Response.builder()
                 .id(region.getId())
-                .name(region.getRegionName())
+                .name(region.getName())
                 .countries(countries)
                 .build();
     }

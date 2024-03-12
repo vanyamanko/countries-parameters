@@ -14,7 +14,7 @@ public class Region {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    private String regionName;
+    private String name;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "region", cascade = CascadeType.PERSIST)
     private List<Country> countryParameters;

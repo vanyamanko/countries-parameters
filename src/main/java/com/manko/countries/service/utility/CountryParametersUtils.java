@@ -24,7 +24,7 @@ public class CountryParametersUtils {
                 .countryShortName(parameters.getShortName())
                 .country(parameters.getName())
                 .code(parameters.getCode())
-                .region(parameters.getRegion().getRegionName())
+                .region(parameters.getRegion().getName())
                 .timeZones(timeZones)
                 .build();
     }

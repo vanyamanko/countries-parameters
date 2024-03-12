@@ -27,5 +27,6 @@ public class CountryDto {
         private String country;
         private Integer code;
         private String region;
+        private Set<String> timeZones;
     }
 }
