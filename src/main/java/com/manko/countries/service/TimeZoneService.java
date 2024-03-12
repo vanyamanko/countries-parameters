@@ -48,6 +48,7 @@ public class TimeZoneService implements CrudService<BaseDto.Response, BaseDto.Re
 
     @Override
     public BaseDto.Response create(BaseDto.RequestBody createForm) {
+        cache.clear();
         TimeZone timeZone = saveTimeZone(createForm);
         return buildTimeZoneResponseFromModel(timeZone);
     }

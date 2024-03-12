@@ -52,6 +52,7 @@ public class RegionService implements CrudService<BaseDto.Response, BaseDto.Requ
                 .isPresent()) {
             throw new IllegalArgumentException("Duplicate region");
         }
+        cache.clear();
         Region region = saveRegion(new Region(), createForm);
         return buildRegionResponseFromModel(region);
     }
