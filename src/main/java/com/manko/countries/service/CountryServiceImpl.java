@@ -20,15 +20,14 @@ import static com.manko.countries.service.utility.CountryParametersUtils.buildCo
 @AllArgsConstructor
 @Slf4j
 public class CountryServiceImpl implements CountryService {
-    private static final String COUNTRY_OR_ID_PREFIX = "countryOrId";
-    private static final String CASH_LOG = "countryOrId";
+    private static final String CASH_LOG = "Cached data found for key: ";
     private final CountryRepository countryRepository;
     private final RegionRepository regionRepository;
     private final Cache cache;
 
     @Override
     public CountryDto.Response getCodeByCountryOrId(String countryOrId) {
-        String key = COUNTRY_OR_ID_PREFIX + countryOrId;
+        String key = "countryOrId" + countryOrId;
         CountryDto.Response cachedData = (CountryDto.Response) cache.get(key);
         if (cachedData != null) {
             String logString = CASH_LOG + key;
