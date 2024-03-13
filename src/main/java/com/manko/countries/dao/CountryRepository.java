@@ -11,11 +11,11 @@ import java.util.Optional;
 
 @Repository
 public interface CountryRepository extends JpaRepository<Country, Integer> {
-    @Query(value = "SELECT * FROM country WHERE LOWER(name) = LOWER(:name) OR LOWER(short_name) = LOWER(:shortName)", nativeQuery = true)
+    @Query("SELECT o FROM Country o WHERE LOWER(o.name) = LOWER(:name) OR LOWER(o.shortName) = LOWER(:shortName)")
     Optional<Country> findByNameIgnoreCaseOrShortNameIgnoreCase(@Param("name") String name, @Param("shortName") String shortName);
 
-    @Query(value = "select * from country o where o.name in (?1)", nativeQuery = true)
-    List<Country> findByNames(@Param("1") List<String> names);
+    @Query(value = "select * from country o where o.name in (:name)", nativeQuery = true)
+    List<Country> findByNames(@Param("name") List<String> names);
 
     Optional<List<Country>> findByCode(Integer code);
 }

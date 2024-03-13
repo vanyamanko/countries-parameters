@@ -24,6 +24,7 @@ public class TimeZoneService implements CrudService<BaseDto.Response, BaseDto.Re
     private final TimeZoneRepository timeZoneRepository;
     private final CountryRepository countryRepository;
     private final Cache cache;
+
     @Override
     public List<BaseDto.Response> getAll() {
         return timeZoneRepository.findAll().stream()
@@ -55,20 +56,16 @@ public class TimeZoneService implements CrudService<BaseDto.Response, BaseDto.Re
 
     @Override
     public BaseDto.Response update(Integer id, BaseDto.RequestBody updateForm) {
-        String key = "id" + id;
-        cache.remove(key);
+        cache.clear();
         TimeZone timeZoneModel = timeZoneRepository.findById(id)
                 .map(timeZone -> saveTimeZone(timeZone, updateForm))
                 .orElseThrow(IllegalArgumentException::new);
-        BaseDto.Response data = buildTimeZoneResponseFromModel(timeZoneModel);
-        cache.put(key, data);
-        return data;
+        return buildTimeZoneResponseFromModel(timeZoneModel);
     }
 
     @Override
     public void delete(Integer id) {
-        String key = "id" + id;
-        cache.remove(key);
+        cache.clear();
         TimeZone timeZone = timeZoneRepository.findById(id)
                 .orElseThrow(IllegalArgumentException::new);
 

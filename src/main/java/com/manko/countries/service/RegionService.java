@@ -59,20 +59,16 @@ public class RegionService implements CrudService<BaseDto.Response, BaseDto.Requ
 
     @Override
     public BaseDto.Response update(Integer id, BaseDto.RequestBody updateForm) {
-        String key = "id" + id;
-        cache.remove(key);
+        cache.clear();
         Region region = regionRepository.findById(id)
                 .orElseThrow(IllegalArgumentException::new);
         Region newRegion = saveRegion(region, updateForm);
-        BaseDto.Response data = buildRegionResponseFromModel(newRegion);
-        cache.put(key, data);
-        return data;
+        return buildRegionResponseFromModel(newRegion);
     }
 
     @Override
     public void delete(Integer id) {
-        String key = "id" + id;
-        cache.remove(key);
+        cache.clear();
         Region region = regionRepository.findById(id)
                 .orElseThrow(IllegalArgumentException::new);
 
