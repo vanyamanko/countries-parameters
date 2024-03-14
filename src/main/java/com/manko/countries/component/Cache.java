@@ -2,24 +2,23 @@ package com.manko.countries.component;
 
 import lombok.Data;
 import org.springframework.stereotype.Component;
-
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Component
 @Data
 public class Cache {
-    private Map<String, Object> cacheMap = new ConcurrentHashMap<>();
+    private Map<String, Object> hashMap = new ConcurrentHashMap<>();
 
     public void put(String key, Object value) {
-        cacheMap.put(key, value);
+        hashMap.put(key, value);
     }
 
     public Object get(String key) {
-        return cacheMap.get(key);
+        return hashMap.get(key);
     }
 
     public void clear() {
-        cacheMap.clear();
+        hashMap.clear();
     }
 }
