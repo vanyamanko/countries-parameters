@@ -1,5 +1,6 @@
 package com.manko.countries.exceptions;
 
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -13,10 +14,12 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
 @RestControllerAdvice
+@Slf4j
 public class ExceptionsHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(RuntimeException.class)
     public ErrorResponse handleInternalServerError(RuntimeException ex) {
+        log.error("error, 500 code");
         return new ErrorResponse(ex.getMessage());
     }
 
@@ -25,18 +28,21 @@ public class ExceptionsHandler {
             MethodArgumentNotValidException.class, MissingServletRequestParameterException.class,
             ConstraintViolationException.class})
     public ErrorResponse handleBadRequestException(Exception ex) {
+        log.error("error, 400 code");
         return new ErrorResponse("400 error, BAD REQUEST");
     }
 
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     public ErrorResponse handleMethodNotAllowed(Exception ex) {
+        log.error("error, 405 code");
         return new ErrorResponse("405 error, METHOD NOT ALLOWED");
     }
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(NoHandlerFoundException.class)
     public ErrorResponse handlerFoundException(Exception ex) {
+        log.error("error, 404 code");
         return new ErrorResponse("404 error, NOT FOUND");
     }
 }
