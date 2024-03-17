@@ -17,6 +17,7 @@
 		<java.version>21</java.version>
 		<sonar.organization>vanyamanko</sonar.organization>
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
+		<version.swagger>2.3.0</version.swagger>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -51,6 +52,11 @@
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+			<version>${version.swagger}</version>
 		</dependency>
 	</dependencies>
 

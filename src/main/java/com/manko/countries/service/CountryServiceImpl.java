@@ -53,7 +53,9 @@ public class CountryServiceImpl implements CountryService {
         }
 
         List<Country> countryList = countryRepository.findByCode(code);
-        if (countryList.isEmpty()) throw new IllegalArgumentException("error 500 (NOT FOUND PHONE CODE IN DB)");
+        if (countryList.isEmpty()) {
+            throw new IllegalArgumentException("error 500 (NOT FOUND PHONE CODE IN DB)");
+        }
         List<CountryDto.Response> data = countryList.stream()
                 .map(CountryParametersUtils::buildCountryParametersDtoFromModel)
                 .toList();
