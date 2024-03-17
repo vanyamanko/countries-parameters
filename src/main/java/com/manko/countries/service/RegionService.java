@@ -40,7 +40,7 @@ public class RegionService implements CrudService<BaseDto.Response, BaseDto.Requ
             return cachedData;
         }
         Region region = regionRepository.findById(id)
-                .orElseThrow(IllegalArgumentException::new);
+                .orElseThrow(() -> new IllegalArgumentException("error 500 (NOT FOUND ID IN DB)"));
         BaseDto.Response data = buildRegionResponseFromModel(region);
         cache.put(key, data);
         return data;

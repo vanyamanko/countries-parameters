@@ -26,8 +26,8 @@ public class CountryServiceImpl implements CountryService {
     private final Cache cache;
 
     @Override
-    public CountryDto.Response getCodeByCountryOrId(String countryOrId) {
-        String key = "countryOrId" + countryOrId;
+    public CountryDto.Response getCodeByCountryOrId(String countryOrShortName) {
+        String key = "countryOrShortName" + countryOrShortName;
         CountryDto.Response cachedData = (CountryDto.Response) cache.get(key);
         if (cachedData != null) {
             String logString = CASH_LOG + key;
@@ -35,8 +35,8 @@ public class CountryServiceImpl implements CountryService {
             return cachedData;
         }
         Country country = countryRepository
-                .findByNameIgnoreCaseOrShortNameIgnoreCase(countryOrId, countryOrId)
-                .orElseThrow(IllegalArgumentException::new);
+                .findByNameIgnoreCaseOrShortNameIgnoreCase(countryOrShortName, countryOrShortName)
+                .orElseThrow(() -> new IllegalArgumentException("error 500 (NOT FOUND COUNTRY IN DB)"));
         CountryDto.Response data = buildCountryParametersDtoFromModel(country);
         cache.put(key, data);
         return data;
@@ -52,9 +52,8 @@ public class CountryServiceImpl implements CountryService {
             return cachedData;
         }
 
-        List<Country> countryList = countryRepository.findByCode(code)
-                .orElseThrow(IllegalArgumentException::new);
-
+        List<Country> countryList = countryRepository.findByCode(code);
+        if (countryList.isEmpty()) throw new IllegalArgumentException("error 500 (NOT FOUND PHONE CODE IN DB)");
         List<CountryDto.Response> data = countryList.stream()
                 .map(CountryParametersUtils::buildCountryParametersDtoFromModel)
                 .toList();
@@ -81,7 +80,7 @@ public class CountryServiceImpl implements CountryService {
             return cachedData;
         }
         Country country = countryRepository.findById(id)
-                .orElseThrow(IllegalArgumentException::new);
+                .orElseThrow(() -> new IllegalArgumentException("error 500 (NOT FOUND ID IN DB)"));
         CountryDto.Response data = buildCountryParametersDtoFromModel(country);
 
         cache.put(key, data);

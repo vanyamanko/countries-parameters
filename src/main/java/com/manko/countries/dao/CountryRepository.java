@@ -17,5 +17,5 @@ public interface CountryRepository extends JpaRepository<Country, Integer> {
     @Query(value = "select * from country o where o.name in (:name)", nativeQuery = true)
     List<Country> findByNames(@Param("name") List<String> names);
 
-    Optional<List<Country>> findByCode(Integer code);
+    List<Country> findByCode(Integer code);
 }

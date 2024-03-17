@@ -41,7 +41,7 @@ public class TimeZoneService implements CrudService<BaseDto.Response, BaseDto.Re
             return cachedData;
         }
         BaseDto.Response data = buildTimeZoneResponseFromModel(timeZoneRepository.findById(id)
-                .orElseThrow(IllegalArgumentException::new));
+                .orElseThrow(() -> new IllegalArgumentException("error 500 (NOT FOUND ID IN DB)")));
 
         cache.put(key, data);
         return data;

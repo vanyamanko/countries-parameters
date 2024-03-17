@@ -26,7 +26,7 @@ public class CountryController {
         this.countriesParametersService = countriesParametersService;
     }
 
-    @GetMapping("/country-or-id")
+    @GetMapping("/country-or-short-name")
     public ResponseEntity<CountryDto.Response> getCodeByCountryOrId(@RequestParam String country) {
         CountryDto.Response code = countriesParametersService.getCodeByCountryOrId(country);
         return ResponseEntity.ok(code);
