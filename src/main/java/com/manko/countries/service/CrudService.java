@@ -7,7 +7,7 @@ public interface CrudService<T, S> {
 
     T get(Integer id);
 
-    T create(S createForm);
+    List<T> create(List<S> createForm);
 
     T update(Integer id, S updateForm);
 

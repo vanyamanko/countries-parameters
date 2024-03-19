@@ -28,8 +28,9 @@ public class TimeZoneController {
     }
 
     @PostMapping
-    public ResponseEntity<BaseDto.Response> createTimeZone(@RequestBody BaseDto.RequestBody timeZone) {
-        return new ResponseEntity<>(timeZoneService.create(timeZone), HttpStatus.CREATED);
+    public ResponseEntity<List<BaseDto.Response>> createTimeZone(@RequestBody List<BaseDto.RequestBody> createForms) {
+        List<BaseDto.Response> responses = timeZoneService.create(createForms);
+        return new ResponseEntity<>(responses, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")

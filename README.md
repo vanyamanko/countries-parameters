@@ -27,7 +27,7 @@ http://localhost:8080/api/v1/phone-code?country=canada
     "countryShortName": "CA",
     "country": "Canada",
     "code": 1,
-    "region": "Nouth America",
+    "region": "North America",
     "timeZones": [
       "UTC-4",
       "UTC-5",

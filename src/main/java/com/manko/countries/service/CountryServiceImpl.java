@@ -11,6 +11,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.manko.countries.service.utility.CountryParametersUtils.buildCountryParameters;
@@ -90,17 +91,26 @@ public class CountryServiceImpl implements CountryService {
     }
 
     @Override
-    public CountryDto.Response create(CountryDto.RequestBody createForm) {
-        if (countryRepository.findByNameIgnoreCaseOrShortNameIgnoreCase(createForm.getCountry(),
-                        createForm.getCountryShortName())
-                .isPresent()) {
-            throw new IllegalArgumentException("Duplicate country");
+    public List<CountryDto.Response> create(List<CountryDto.RequestBody> createForms) {
+        List<CountryDto.Response> responses = new ArrayList<>();
+
+        for (CountryDto.RequestBody createForm : createForms) {
+            if (countryRepository.findByNameIgnoreCaseOrShortNameIgnoreCase(createForm.getCountry(),
+                    createForm.getCountryShortName()).isPresent()) {
+                throw new IllegalArgumentException("Duplicate country");
+            }
+
+            Region region = regionRepository.findByName(createForm.getRegion())
+                    .orElseThrow(IllegalArgumentException::new);
+
+            Country country = buildCountryParameters(createForm, region);
+            countryRepository.save(country);
+
+            CountryDto.Response response = buildCountryParametersDtoFromModel(country);
+            responses.add(response);
         }
-        Region region = regionRepository.findByName(createForm.getRegion())
-                .orElseThrow(IllegalArgumentException::new);
-        Country country = buildCountryParameters(createForm, region);
-        countryRepository.save(country);
-        return buildCountryParametersDtoFromModel(country);
+
+        return responses;
     }
 
     @Override

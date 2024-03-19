@@ -11,6 +11,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -48,10 +49,18 @@ public class TimeZoneService implements CrudService<BaseDto.Response, BaseDto.Re
     }
 
     @Override
-    public BaseDto.Response create(BaseDto.RequestBody createForm) {
+    public List<BaseDto.Response> create(List<BaseDto.RequestBody> createForms) {
         cache.clear();
-        TimeZone timeZone = saveTimeZone(createForm);
-        return buildTimeZoneResponseFromModel(timeZone);
+
+        List<BaseDto.Response> responses = new ArrayList<>();
+
+        for (BaseDto.RequestBody createForm : createForms) {
+            TimeZone timeZone = saveTimeZone(createForm);
+            BaseDto.Response response = TimeZoneUtils.buildTimeZoneResponseFromModel(timeZone);
+            responses.add(response);
+        }
+
+        return responses;
     }
 
     @Override

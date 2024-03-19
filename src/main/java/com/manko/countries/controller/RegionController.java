@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @AllArgsConstructor
@@ -28,8 +27,9 @@ public class RegionController {
     }
 
     @PostMapping
-    public ResponseEntity<BaseDto.Response> createRegion(@RequestBody BaseDto.RequestBody region) {
-        return new ResponseEntity<>(regionService.create(region), HttpStatus.CREATED);
+    public ResponseEntity<List<BaseDto.Response>> createRegion(@RequestBody List<BaseDto.RequestBody> createForms) {
+        List<BaseDto.Response> responses = regionService.create(createForms);
+        return new ResponseEntity<>(responses, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")

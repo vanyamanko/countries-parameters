@@ -5,12 +5,15 @@ import com.manko.countries.dao.CountryRepository;
 import com.manko.countries.dao.RegionRepository;
 import com.manko.countries.model.Country;
 import com.manko.countries.model.Region;
+import com.manko.countries.model.TimeZone;
 import com.manko.countries.model.dto.BaseDto;
 import com.manko.countries.service.utility.RegionUtils;
+import com.manko.countries.service.utility.TimeZoneUtils;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.manko.countries.service.utility.RegionUtils.buildRegionResponseFromModel;
@@ -47,14 +50,20 @@ public class RegionService implements CrudService<BaseDto.Response, BaseDto.Requ
     }
 
     @Override
-    public BaseDto.Response create(BaseDto.RequestBody createForm) {
-        if (regionRepository.findByName(createForm.getName())
-                .isPresent()) {
-            throw new IllegalArgumentException("Duplicate region");
+    public List<BaseDto.Response> create(List<BaseDto.RequestBody> createForms) {
+        List<BaseDto.Response> responses = new ArrayList<>();
+
+        for (BaseDto.RequestBody createForm : createForms) {
+            if (regionRepository.findByName(createForm.getName()).isPresent()) {
+                throw new IllegalArgumentException("Duplicate region");
+            }
+            cache.clear();
+            Region region = saveRegion(new Region(), createForm);
+            BaseDto.Response response = buildRegionResponseFromModel(region);
+            responses.add(response);
         }
-        cache.clear();
-        Region region = saveRegion(new Region(), createForm);
-        return buildRegionResponseFromModel(region);
+
+        return responses;
     }
 
     @Override

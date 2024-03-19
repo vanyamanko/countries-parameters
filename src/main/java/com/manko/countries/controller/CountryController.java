@@ -51,8 +51,9 @@ public class CountryController {
     }
 
     @PostMapping
-    public ResponseEntity<CountryDto.Response> createCountryParameters(@RequestBody CountryDto.RequestBody countryParameters) {
-        return new ResponseEntity<>(countriesParametersService.create(countryParameters), HttpStatus.CREATED);
+    public ResponseEntity<List<CountryDto.Response>> createCountryParameters(@RequestBody List<CountryDto.RequestBody> createForms) {
+        List<CountryDto.Response> responses = countriesParametersService.create(createForms);
+        return new ResponseEntity<>(responses, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
