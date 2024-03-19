@@ -18,8 +18,22 @@
 		<sonar.organization>vanyamanko</sonar.organization>
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 		<version.swagger>2.3.0</version.swagger>
+		<version.junit>5.10.0</version.junit>
+		<version.mock>2.24.0</version.mock>
 	</properties>
 	<dependencies>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+			<version>${version.mock}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+		<groupId>org.junit.jupiter</groupId>
+		<artifactId>junit-jupiter-api</artifactId>
+		<version>${version.junit}</version>
+		<scope>test</scope>
+	  </dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
