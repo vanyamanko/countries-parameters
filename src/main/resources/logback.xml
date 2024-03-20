@@ -6,10 +6,6 @@
     </encoder>
 </appender>
 
-<logger name="com.manko.countries.exceptions" level="error" additivity="false">
-    <appender-ref ref="FILE" />
-</logger>
-
 <root level="info">
     <appender-ref ref="FILE" />
 </root>
