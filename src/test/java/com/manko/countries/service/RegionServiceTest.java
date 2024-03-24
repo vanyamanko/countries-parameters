@@ -6,6 +6,7 @@ import com.manko.countries.dao.RegionRepository;
 import com.manko.countries.model.Country;
 import com.manko.countries.model.Region;
 import com.manko.countries.model.dto.BaseDto;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -20,6 +21,7 @@ import static com.manko.countries.service.utility.RegionUtils.buildRegionRespons
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+@Slf4j
 class RegionServiceTest {
 
     @InjectMocks
@@ -89,7 +91,16 @@ class RegionServiceTest {
         verify(regionRepository, times(1)).findById(regionId);
         verify(cache, times(1)).put(cacheKey, expectedResponse);
     }
+    @Test
+    void testGet_CachedDataNotNull() {
+        Integer id = 1;
+        String key = "id" + id;
+        BaseDto.Response cachedData = new BaseDto.Response();
 
+        when(cache.get(key)).thenReturn(cachedData);
+        
+        assertEquals(cachedData, regionService.get(id));
+    }
     @Test
     void testGet_NonExistingRegion() {
         Integer id = 1;
@@ -180,7 +191,12 @@ class RegionServiceTest {
         region.setCountries(new ArrayList<>());
 
         when(regionRepository.findById(id)).thenReturn(Optional.of(region));
-
+        for (Country country : region.getCountries()) {
+            verify(countryRepository).save(country);
+        }
+        for (Country country : region.getCountries()) {
+            assertNull(country.getRegion());
+        }
         regionService.delete(id);
 
         verify(regionRepository, times(1)).deleteById(id);
