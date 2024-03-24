@@ -98,7 +98,7 @@ class RegionServiceTest {
         BaseDto.Response cachedData = new BaseDto.Response();
 
         when(cache.get(key)).thenReturn(cachedData);
-        
+
         assertEquals(cachedData, regionService.get(id));
     }
     @Test
