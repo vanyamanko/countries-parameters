@@ -39,7 +39,6 @@ class RegionServiceTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
-        regionService = new RegionService(regionRepository, countryRepository, cache);
     }
 
     @Test

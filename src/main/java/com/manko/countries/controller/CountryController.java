@@ -20,50 +20,50 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/countries-parameters")
 public class CountryController {
-    private final CountryService countriesParametersService;
+    private final CountryService countriesService;
 
-    public CountryController(CountryService countriesParametersService) {
-        this.countriesParametersService = countriesParametersService;
+    public CountryController(CountryService countriesService) {
+        this.countriesService = countriesService;
     }
 
     @GetMapping("/country-or-short-name")
     public ResponseEntity<CountryDto.Response> getCodeByCountryOrId(@RequestParam String country) {
-        CountryDto.Response code = countriesParametersService.getCodeByCountryOrId(country);
+        CountryDto.Response code = countriesService.getCodeByCountryOrId(country);
         return ResponseEntity.ok(code);
     }
 
     @GetMapping("/code")
     public ResponseEntity<List<CountryDto.Response>> getCountryByCode(@RequestParam Integer code) {
-        List<CountryDto.Response> countries = countriesParametersService.getCountriesByCode(code);
+        List<CountryDto.Response> countries = countriesService.getCountriesByCode(code);
         return ResponseEntity.ok(countries);
     }
 
     @GetMapping
     public ResponseEntity<List<CountryDto.Response>> getAllCountryParameters() {
-        List<CountryDto.Response> countries = countriesParametersService.getAll();
+        List<CountryDto.Response> countries = countriesService.getAll();
         return new ResponseEntity<>(countries, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CountryDto.Response> getCountryParametersById(@PathVariable Integer id) {
-        CountryDto.Response country = countriesParametersService.get(id);
+    public ResponseEntity<CountryDto.Response> getCountryById(@PathVariable Integer id) {
+        CountryDto.Response country = countriesService.get(id);
         return new ResponseEntity<>(country, HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<List<CountryDto.Response>> createCountryParameters(@RequestBody List<CountryDto.RequestBody> createForms) {
-        List<CountryDto.Response> responses = countriesParametersService.create(createForms);
+    public ResponseEntity<List<CountryDto.Response>> createCountry(@RequestBody List<CountryDto.RequestBody> createForms) {
+        List<CountryDto.Response> responses = countriesService.create(createForms);
         return new ResponseEntity<>(responses, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<CountryDto.Response> updateCountryParameters(@PathVariable Integer id, @RequestBody CountryDto.RequestBody countryParameters) {
-        return new ResponseEntity<>(countriesParametersService.update(id, countryParameters), HttpStatus.CREATED);
+        return new ResponseEntity<>(countriesService.update(id, countryParameters), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCountryParameters(@PathVariable Integer id) {
-        countriesParametersService.delete(id);
+        countriesService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

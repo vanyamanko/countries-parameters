@@ -4,6 +4,7 @@ import com.manko.countries.model.dto.BaseDto;
 import com.manko.countries.service.CrudService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 class RegionControllerTest {
+
+    @InjectMocks
     private RegionController regionController;
 
     @Mock
@@ -24,7 +27,6 @@ class RegionControllerTest {
     @BeforeEach
     void setup() {
         MockitoAnnotations.initMocks(this);
-        regionController = new RegionController(regionService);
     }
 
     @Test
