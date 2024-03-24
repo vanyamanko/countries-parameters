@@ -1,5 +1,4 @@
 package com.manko.countries.service;
-
 import com.manko.countries.component.Cache;
 import com.manko.countries.dao.CountryRepository;
 import com.manko.countries.dao.RegionRepository;
@@ -10,10 +9,8 @@ import com.manko.countries.service.utility.RegionUtils;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import static com.manko.countries.service.utility.RegionUtils.buildRegionResponseFromModel;
 
 @AllArgsConstructor
@@ -77,9 +74,9 @@ public class RegionService implements CrudService<BaseDto.Response, BaseDto.Requ
     public void delete(Integer id) {
         cache.clear();
         Region region = regionRepository.findById(id)
-                .orElseThrow(IllegalArgumentException::new);
+                .orElseThrow(() -> new IllegalArgumentException("error 500 (NOT FOUND ID IN DB)"));
 
-        for (Country country : region.getCountryParameters()) {
+        for (Country country : region.getCountries()) {
             country.setRegion(null);
             countryRepository.save(country);
         }
@@ -87,7 +84,7 @@ public class RegionService implements CrudService<BaseDto.Response, BaseDto.Requ
         regionRepository.deleteById(id);
     }
 
-    private Region saveRegion(Region region, BaseDto.RequestBody requestBody) {
+    public Region saveRegion(Region region, BaseDto.RequestBody requestBody) {
         List<Country> countryParameters = countryRepository.findByNames(requestBody.getCountries());
 
         region.setName(requestBody.getName());
@@ -98,7 +95,7 @@ public class RegionService implements CrudService<BaseDto.Response, BaseDto.Requ
             countryRepository.save(country);
         }
 
-        region.setCountryParameters(countryParameters);
+        region.setCountries(countryParameters);
 
         return region;
     }

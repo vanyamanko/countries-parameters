@@ -11,8 +11,8 @@ import java.util.List;
 public class RegionUtils {
     public static BaseDto.Response buildRegionResponseFromModel(Region region) {
         List<String> countries = null;
-        if (region.getCountryParameters() != null) {
-            countries = region.getCountryParameters().stream()
+        if (region.getCountries() != null) {
+            countries = region.getCountries().stream()
                     .map(Country::getName)
                     .toList();
         }
