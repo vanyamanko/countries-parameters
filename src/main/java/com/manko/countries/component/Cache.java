@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Component
-@SuppressWarnings("squid:S4684")
 @Data
 public class Cache {
     private Map<String, Object> hashMap = new ConcurrentHashMap<>();
