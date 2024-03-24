@@ -9,6 +9,7 @@ import java.util.List;
 
 @UtilityClass
 public class BaseDto {
+
     @Data
     @Builder
     @NoArgsConstructor

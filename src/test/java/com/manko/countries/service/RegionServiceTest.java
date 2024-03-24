@@ -14,6 +14,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -91,6 +92,7 @@ class RegionServiceTest {
         verify(regionRepository, times(1)).findById(regionId);
         verify(cache, times(1)).put(cacheKey, expectedResponse);
     }
+
     @Test
     void testGet_CachedDataNotNull() {
         Integer id = 1;
@@ -101,6 +103,7 @@ class RegionServiceTest {
 
         assertEquals(cachedData, regionService.get(id));
     }
+
     @Test
     void testGet_NonExistingRegion() {
         Integer id = 1;
@@ -183,23 +186,21 @@ class RegionServiceTest {
     }
 
     @Test
-    void testDelete() {
-        Integer id = 1;
+    void testDeleteRegionWithCountries() {
         Region region = new Region();
-        region.setId(id);
-        region.setName("Region");
-        region.setCountries(new ArrayList<>());
+        region.setId(1);
+        Country country1 = new Country();
+        country1.setRegion(region);
+        Country country2 = new Country();
+        country2.setRegion(region);
+        region.setCountries(List.of(country1, country2));
 
-        when(regionRepository.findById(id)).thenReturn(Optional.of(region));
-        for (Country country : region.getCountries()) {
-            verify(countryRepository).save(country);
-        }
-        for (Country country : region.getCountries()) {
-            assertNull(country.getRegion());
-        }
-        regionService.delete(id);
+        when(regionRepository.findById(1)).thenReturn(Optional.of(region));
 
-        verify(regionRepository, times(1)).deleteById(id);
+        regionService.delete(1);
+
+        verify(countryRepository, times(2)).save(any());
+        verify(regionRepository, times(1)).deleteById(1);
     }
 
     @Test
@@ -253,5 +254,5 @@ class RegionServiceTest {
         verify(countryRepository, times(1)).save(firstCountry);
         verify(countryRepository, times(1)).save(secondCountry);
     }
-}
 
+}
