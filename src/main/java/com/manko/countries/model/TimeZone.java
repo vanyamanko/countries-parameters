@@ -22,5 +22,5 @@ public class TimeZone {
     private String name;
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "timeZones", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private List<Country> countrySet;
+    private List<Country> countryList;
 }

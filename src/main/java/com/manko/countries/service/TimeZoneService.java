@@ -76,9 +76,9 @@ public class TimeZoneService implements CrudService<BaseDto.Response, BaseDto.Re
     public void delete(Integer id) {
         cache.clear();
         TimeZone timeZone = timeZoneRepository.findById(id)
-                .orElseThrow(IllegalArgumentException::new);
+                .orElseThrow(() -> new IllegalArgumentException("error 500 (NOT FOUND ID IN DB)"));
 
-        for (Country country : timeZone.getCountrySet()) {
+        for (Country country : timeZone.getCountryList()) {
             country.getTimeZones().remove(timeZone);
         }
 
@@ -90,7 +90,7 @@ public class TimeZoneService implements CrudService<BaseDto.Response, BaseDto.Re
         return saveTimeZone(timeZone, requestBody);
     }
 
-    private TimeZone saveTimeZone(TimeZone timeZone, BaseDto.RequestBody requestBody) {
+    public TimeZone saveTimeZone(TimeZone timeZone, BaseDto.RequestBody requestBody) {
         List<Country> countryParameters = countryRepository.findByNames(requestBody.getCountries());
         timeZone.setName(requestBody.getName());
         timeZoneRepository.save(timeZone);
@@ -105,7 +105,7 @@ public class TimeZoneService implements CrudService<BaseDto.Response, BaseDto.Re
             countryRepository.save(country);
         });
 
-        timeZone.setCountrySet(countryParameters);
+        timeZone.setCountryList(countryParameters);
         return timeZone;
     }
 }

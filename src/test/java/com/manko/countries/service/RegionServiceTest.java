@@ -12,11 +12,9 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
 import static com.manko.countries.service.utility.RegionUtils.buildRegionResponseFromModel;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -44,15 +42,15 @@ class RegionServiceTest {
     @Test
     void testGetAll() {
         List<Region> regions = new ArrayList<>();
-        Region region1 = new Region();
-        region1.setId(1);
-        region1.setName("Region 1");
-        regions.add(region1);
+        Region regionFirst = new Region();
+        regionFirst.setId(1);
+        regionFirst.setName("Region 1");
+        regions.add(regionFirst);
 
-        Region region2 = new Region();
-        region2.setId(2);
-        region2.setName("Region 2");
-        regions.add(region2);
+        Region regionSecond = new Region();
+        regionSecond.setId(2);
+        regionSecond.setName("Region 2");
+        regions.add(regionSecond);
 
         when(regionRepository.findAll()).thenReturn(regions);
 
@@ -110,11 +108,11 @@ class RegionServiceTest {
         when(cache.get(key)).thenReturn(null);
         when(regionRepository.findById(id)).thenReturn(Optional.empty());
 
-        Exception exception = null;
+        Exception exception = new Exception();
         try {
             regionService.get(id);
-        } catch (IllegalArgumentException e) {
-            exception = e;
+        } catch (IllegalArgumentException ex) {
+            exception = ex;
         }
 
         assertEquals("error 500 (NOT FOUND ID IN DB)", exception.getMessage());
@@ -153,8 +151,6 @@ class RegionServiceTest {
         assertThrows(IllegalArgumentException.class, () -> regionService.create(createForms));
 
         verify(regionRepository, times(1)).findByName(requestBody.getName());
-        verify(regionRepository, times(1)).findByName(requestBody.getName());
-
     }
 
     @Test
@@ -187,11 +183,11 @@ class RegionServiceTest {
     void testDeleteRegionWithCountries() {
         Region region = new Region();
         region.setId(1);
-        Country country1 = new Country();
-        country1.setRegion(region);
-        Country country2 = new Country();
-        country2.setRegion(region);
-        region.setCountries(List.of(country1, country2));
+        Country countryFirst = new Country();
+        countryFirst.setRegion(region);
+        Country countrySecond = new Country();
+        countrySecond.setRegion(region);
+        region.setCountries(List.of(countryFirst, countrySecond));
 
         when(regionRepository.findById(1)).thenReturn(Optional.of(region));
 
@@ -214,6 +210,7 @@ class RegionServiceTest {
             exception = ex;
         }
 
+        assert exception != null;
         assertEquals("error 500 (NOT FOUND ID IN DB)", exception.getMessage());
         verify(regionRepository, times(0)).deleteById(id);
     }

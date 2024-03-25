@@ -11,8 +11,8 @@ import java.util.List;
 public class TimeZoneUtils {
     public static BaseDto.Response buildTimeZoneResponseFromModel(TimeZone timeZone) {
         List<String> countries = null;
-        if (timeZone.getCountrySet() != null) {
-            countries = timeZone.getCountrySet().stream()
+        if (timeZone.getCountryList() != null) {
+            countries = timeZone.getCountryList().stream()
                     .map(Country::getName)
                     .toList();
         }
