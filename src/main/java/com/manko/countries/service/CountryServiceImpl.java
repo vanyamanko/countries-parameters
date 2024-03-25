@@ -132,7 +132,7 @@ public class CountryServiceImpl implements CountryService {
         countryRepository.deleteById(id);
     }
 
-    private Country updateCountryParameters(Country country, CountryDto.RequestBody updateForm, Region region) {
+    public Country updateCountryParameters(Country country, CountryDto.RequestBody updateForm, Region region) {
         if (updateForm.getCountryShortName() != null) {
             country.setShortName(updateForm.getCountryShortName());
         }

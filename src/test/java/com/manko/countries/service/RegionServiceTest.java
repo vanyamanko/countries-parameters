@@ -252,5 +252,4 @@ class RegionServiceTest {
         verify(countryRepository, times(1)).save(firstCountry);
         verify(countryRepository, times(1)).save(secondCountry);
     }
-
 }
