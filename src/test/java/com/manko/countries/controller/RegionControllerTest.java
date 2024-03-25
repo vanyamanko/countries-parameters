@@ -64,7 +64,7 @@ class RegionControllerTest {
                 new BaseDto.RequestBody("Region 2", null)
         );
         List<BaseDto.Response> responses = Arrays.asList(
-                createRegionResponse(1, "First Region"),
+                createRegionResponse(1, "Region 1"),
                 createRegionResponse(2, "Region 2")
         );
         when(regionService.create(createForms)).thenReturn(responses);
