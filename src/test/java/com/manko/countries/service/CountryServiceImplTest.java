@@ -12,7 +12,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import static com.manko.countries.service.utility.CountryParametersUtils.buildCountryParametersDtoFromModel;
+import static com.manko.countries.service.utility.CountryUtils.buildCountryParametersDtoFromModel;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 

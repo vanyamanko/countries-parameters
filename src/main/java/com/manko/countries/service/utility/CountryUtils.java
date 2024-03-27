@@ -10,7 +10,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @UtilityClass
-public class CountryParametersUtils {
+public class CountryUtils {
     public static CountryDto.Response buildCountryParametersDtoFromModel(Country parameters) {
         Set<String> timeZones = null;
         if (parameters.getTimeZones() != null) {

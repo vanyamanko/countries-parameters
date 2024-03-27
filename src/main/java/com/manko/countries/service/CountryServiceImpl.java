@@ -6,7 +6,7 @@ import com.manko.countries.dao.RegionRepository;
 import com.manko.countries.model.Country;
 import com.manko.countries.model.Region;
 import com.manko.countries.model.dto.CountryDto;
-import com.manko.countries.service.utility.CountryParametersUtils;
+import com.manko.countries.service.utility.CountryUtils;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -14,8 +14,8 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.manko.countries.service.utility.CountryParametersUtils.buildCountryParameters;
-import static com.manko.countries.service.utility.CountryParametersUtils.buildCountryParametersDtoFromModel;
+import static com.manko.countries.service.utility.CountryUtils.buildCountryParameters;
+import static com.manko.countries.service.utility.CountryUtils.buildCountryParametersDtoFromModel;
 
 @Service
 @AllArgsConstructor
@@ -58,7 +58,7 @@ public class CountryServiceImpl implements CountryService {
             throw new IllegalArgumentException("error 500 (NOT FOUND PHONE CODE IN DB)");
         }
         List<CountryDto.Response> data = countryList.stream()
-                .map(CountryParametersUtils::buildCountryParametersDtoFromModel)
+                .map(CountryUtils::buildCountryParametersDtoFromModel)
                 .toList();
 
         cache.put(key, data);
@@ -69,7 +69,7 @@ public class CountryServiceImpl implements CountryService {
     @Override
     public List<CountryDto.Response> getAll() {
         return countryRepository.findAll().stream()
-                .map(CountryParametersUtils::buildCountryParametersDtoFromModel)
+                .map(CountryUtils::buildCountryParametersDtoFromModel)
                 .toList();
     }
 
