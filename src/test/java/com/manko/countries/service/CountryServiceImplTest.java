@@ -151,7 +151,7 @@ class CountryServiceImplTest {
         when(regionRepository.findByName(updateForm.getRegion())).thenReturn(Optional.of(existingRegion));
         when(countryRepository.save(any(Country.class))).thenReturn(updatedCountry);
 
-        CountryDto.Response response = countryService.update(id, updateForm);
+        countryService.update(id, updateForm);
 
         verify(countryRepository, times(1)).findById(id);
         verify(regionRepository, times(1)).findByName(updateForm.getRegion());
@@ -168,7 +168,6 @@ class CountryServiceImplTest {
 
     @Test
     void testUpdateCountryParameters() {
-        // Arrange
         Country existingCountry = new Country();
         existingCountry.setShortName("ExistingShortName");
         existingCountry.setName("ExistingName");
@@ -195,7 +194,7 @@ class CountryServiceImplTest {
         Country country = new Country();
         Region region = new Region();
         country.setRegion(region);
-        List<Country> countryList = Arrays.asList(country);
+        List<Country> countryList = List.of(country);
         when(countryRepository.findAll()).thenReturn(countryList);
 
         List<CountryDto.Response> responseList = countryService.getAll();
