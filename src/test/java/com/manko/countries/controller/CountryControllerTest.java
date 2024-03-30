@@ -2,6 +2,7 @@ package com.manko.countries.controller;
 
 import com.manko.countries.model.dto.CountryDto;
 import com.manko.countries.service.CountryService;
+import com.manko.countries.service.RequestCounterService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -23,6 +24,9 @@ class CountryControllerTest {
 
     @Mock
     private CountryService countryService;
+
+    @Mock
+    private RequestCounterService requestCounterService;
 
     @BeforeEach
     void setUp() {
@@ -78,9 +82,6 @@ class CountryControllerTest {
 
     @Test
     void testCreateCountry() {
-        CountryService countryService = mock(CountryService.class);
-        CountryController countryController = new CountryController(countryService);
-
         List<CountryDto.RequestBody> createForms = new ArrayList<>();
 
         List<CountryDto.Response> expectedResponses = new ArrayList<>();
@@ -97,9 +98,6 @@ class CountryControllerTest {
 
     @Test
     void testUpdateCountryParameters() {
-        CountryService countryService = mock(CountryService.class);
-        CountryController countryController = new CountryController(countryService);
-
         Integer id = 1;
         CountryDto.RequestBody countryParameters = mock(CountryDto.RequestBody.class);
 
@@ -118,12 +116,7 @@ class CountryControllerTest {
 
     @Test
     void testDeleteCountryParameters() {
-        CountryService countryService = mock(CountryService.class);
-        CountryController countryController = new CountryController(countryService);
-
         Integer id = 1;
-
-
         ResponseEntity<Void> expectedResponse = new ResponseEntity<>(HttpStatus.NO_CONTENT);
         ResponseEntity<Void> actualResponse = countryController.deleteCountryParameters(id);
 

@@ -66,7 +66,7 @@ class RegionServiceTest {
     @Test
     void testGet() {
         int regionId = 1;
-        String cacheKey = "id" + regionId;
+        String cacheKey = "idRegion" + regionId;
 
         Region region = new Region();
         region.setId(regionId);
@@ -92,7 +92,7 @@ class RegionServiceTest {
     @Test
     void testGet_CachedDataNotNull() {
         Integer id = 1;
-        String key = "id" + id;
+        String key = "idRegion" + id;
         BaseDto.Response cachedData = new BaseDto.Response();
 
         when(cache.get(key)).thenReturn(cachedData);
@@ -103,7 +103,7 @@ class RegionServiceTest {
     @Test
     void testGet_NonExistingRegion() {
         Integer id = 1;
-        String key = "id" + id;
+        String key = "idRegion" + id;
 
         when(cache.get(key)).thenReturn(null);
         when(regionRepository.findById(id)).thenReturn(Optional.empty());

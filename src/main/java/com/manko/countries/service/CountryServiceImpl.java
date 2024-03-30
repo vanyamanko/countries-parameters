@@ -75,7 +75,7 @@ public class CountryServiceImpl implements CountryService {
 
     @Override
     public CountryDto.Response get(Integer id) {
-        String key = "id" + id;
+        String key = "idCountry" + id;
         CountryDto.Response cachedData = (CountryDto.Response) cache.get(key);
         if (cachedData != null) {
             String logString = CASH_LOG + key;

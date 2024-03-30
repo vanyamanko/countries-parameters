@@ -31,7 +31,7 @@ public class RegionService implements CrudService<BaseDto.Response, BaseDto.Requ
 
     @Override
     public BaseDto.Response get(Integer id) {
-        String key = "id" + id;
+        String key = "idRegion" + id;
         BaseDto.Response cachedData = (BaseDto.Response) cache.get(key);
         if (cachedData != null) {
             log.info("Cached data found for key: {}", key);

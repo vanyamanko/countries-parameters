@@ -63,7 +63,7 @@ class TimeZoneServiceTest {
     @Test
     void testGet() {
         int id = 1;
-        String cacheKey = "id" + id;
+        String cacheKey = "idTimeZone" + id;
 
         TimeZone timeZone = new TimeZone();
         timeZone.setId(id);
@@ -89,7 +89,7 @@ class TimeZoneServiceTest {
     @Test
     void testGet_CachedDataNotNull() {
         Integer id = 1;
-        String key = "id" + id;
+        String key = "idTimeZone" + id;
         BaseDto.Response cachedData = new BaseDto.Response();
 
         when(cache.get(key)).thenReturn(cachedData);
@@ -100,7 +100,7 @@ class TimeZoneServiceTest {
     @Test
     void testGet_NonExistingTimeZone() {
         Integer id = 1;
-        String key = "id" + id;
+        String key = "idTimeZone" + id;
 
         when(cache.get(key)).thenReturn(null);
         when(timeZoneRepository.findById(id)).thenReturn(Optional.empty());

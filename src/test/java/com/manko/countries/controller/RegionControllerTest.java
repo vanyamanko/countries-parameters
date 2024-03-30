@@ -2,6 +2,7 @@ package com.manko.countries.controller;
 
 import com.manko.countries.model.dto.BaseDto;
 import com.manko.countries.service.CrudService;
+import com.manko.countries.service.RequestCounterService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -23,6 +24,9 @@ class RegionControllerTest {
 
     @Mock
     private CrudService<BaseDto.Response, BaseDto.RequestBody> regionService;
+
+    @Mock
+    private RequestCounterService requestCounterService;
 
     @BeforeEach
     void setup() {
