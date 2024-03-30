@@ -22,34 +22,34 @@ public class TimeZoneController {
 
     @GetMapping
     public ResponseEntity<List<BaseDto.Response>> getAllTimeZones() {
-        log.info(String.valueOf(requestCounterService.increment()));
+        log.info(String.valueOf(requestCounterService.incrementAndGet()));
         List<BaseDto.Response> timeZones = timeZoneService.getAll();
         return new ResponseEntity<>(timeZones, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<BaseDto.Response> getTimeZoneById(@PathVariable Integer id) {
-        log.info(String.valueOf(requestCounterService.increment()));
+        log.info(String.valueOf(requestCounterService.incrementAndGet()));
         BaseDto.Response timeZone = timeZoneService.get(id);
         return new ResponseEntity<>(timeZone, HttpStatus.OK);
     }
 
     @PostMapping
     public ResponseEntity<List<BaseDto.Response>> createTimeZone(@RequestBody List<BaseDto.RequestBody> createForms) {
-        log.info(String.valueOf(requestCounterService.increment()));
+        log.info(String.valueOf(requestCounterService.incrementAndGet()));
         List<BaseDto.Response> responses = timeZoneService.create(createForms);
         return new ResponseEntity<>(responses, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<BaseDto.Response> updateTimeZone(@PathVariable Integer id, @RequestBody BaseDto.RequestBody timeZone) {
-        log.info(String.valueOf(requestCounterService.increment()));
+        log.info(String.valueOf(requestCounterService.incrementAndGet()));
         return new ResponseEntity<>(timeZoneService.update(id, timeZone), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteTimeZone(@PathVariable Integer id) {
-        log.info(String.valueOf(requestCounterService.increment()));
+        log.info(String.valueOf(requestCounterService.incrementAndGet()));
         timeZoneService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
