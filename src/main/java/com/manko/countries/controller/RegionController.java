@@ -14,6 +14,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/v1/regions")
 @Slf4j
+@CrossOrigin(origins = "*")
 public class RegionController {
     private final RequestCounterService requestCounterService;
     private final CrudService<BaseDto.Response, BaseDto.RequestBody> regionService;
