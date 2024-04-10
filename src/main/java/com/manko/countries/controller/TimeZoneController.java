@@ -15,7 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/v1/timezones")
 @Slf4j
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:3000")
 public class TimeZoneController {
     private final CrudService<BaseDto.Response, BaseDto.RequestBody> timeZoneService;
 
