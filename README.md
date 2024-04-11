@@ -1,4 +1,4 @@
-# Phone Number Lookup Service
+# Countries Parameters Service
 Phone Number Lookup Service is a Java Maven server that accepts phone numbers or country codes as input and returns a JSON object containing information about the phone number.
 ## Technologies Used:
 1. Java
