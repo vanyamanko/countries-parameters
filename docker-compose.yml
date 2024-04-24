@@ -21,3 +21,9 @@ services:
       POSTGRES_DB: phone-codes
     expose:
       - 5432
+
+  frontend-react:
+    container_name: frontend
+    build: ../countries-parameters-client
+    ports:
+      - "3000:3000"

@@ -15,7 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/v1/timezones")
 @Slf4j
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = {"http://localhost:3000", "https://countries-parameters.vercel.app"})
 public class TimeZoneController {
     private final CrudService<BaseDto.Response, BaseDto.RequestBody> timeZoneService;
 
